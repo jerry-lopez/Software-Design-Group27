@@ -50,13 +50,16 @@ class NewFuelQuote extends Component {
         axios.post('http://localhost:5000/newForm', quote)
             .then(res => console.log(res.data));
 
-        window.location = '/newForm';
+        //window.location = '/newForm';
     }
 
 
     render() {
         return (
             <Container className="mt-5 mb-5 pt-5">
+                <div>
+                    <button onClick={this.onLogoutClick}>Logout</button>
+                </div>
                 <Card>
                   <Card.Body>
                     <Container>
