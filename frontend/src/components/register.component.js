@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Form, Button, Card, Container } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -22,17 +21,24 @@ class RegisterPage extends Component {
         }
     } 
 
-    componentWillReceiveProps(nextProps) {
+    componentDidMount() {
+        /*
+        This function checks to see if the current user accessing this page is already
+        logged in as a user. If that is true, then redirect the user to the quote form page
+        */
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/newForm");
+        }
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.push("/"); // push user login component
+        }
         if (nextProps.errors) {
             this.setState({
                 errors: nextProps.errors
             });
-        }
-    }
-
-    componentDidMount() {
-        if (this.props.auth.isAuthenticated) {
-            this.props.history.push("/newForm");
         }
     }
 
@@ -58,12 +64,6 @@ class RegisterPage extends Component {
 
         this.props.registerUser(userData, this.props.history);
 
-        console.log(`Success: ${userData}`);
-
-        axios.post('http://localhost:5000/register', userData)
-            .then(res => console.log(res.data));
-
-        window.location = '/';
     }
 
     render() {
@@ -80,9 +80,7 @@ class RegisterPage extends Component {
                                     onChange={this.onChangeUsername}
                                     value={this.state.username}
                                     errors={errors.username}
-                                    className={classnames("", {
-                                        invalid: errors.username
-                                    })}
+                                    className={classnames("", { invalid: errors.username })}
                                   />
                                   <span className="red-text">{errors.username}</span>
                                 </Form.Group>
@@ -93,9 +91,7 @@ class RegisterPage extends Component {
                                     onChange={this.onChangePassword}
                                     value={this.state.password}
                                     errors={errors.password}
-                                    className={classnames("", {
-                                        invalid: errors.password
-                                    })}
+                                    className={classnames("", { invalid: errors.password })}
                                   />
                                   <span className="red-text">{errors.password}</span>
                                </Form.Group>

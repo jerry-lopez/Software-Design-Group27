@@ -30,9 +30,13 @@ const clientSchema = new Schema({
     },
     zipcode: {
         type: Number,
-        min: 5,
-        max: 9,
+        minlength: 5,
+        maxlength: 9,
         required: true
+    },
+    username_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'users'
     }
 });
 
