@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Form, Button, Card, Container } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -28,8 +27,11 @@ class UserLogin extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
+        if (nextProps.auth.isAuthenticated && this.props.clientInfo) {
             this.props.history.push("/newForm"); // push user fuel quote component
+        }
+        else if (nextProps.auth.isAuthenticated && !this.props.clientInfo){
+            this.props.history.push("/profile");
         }
 
         if (nextProps.errors) {
@@ -61,10 +63,6 @@ class UserLogin extends Component {
 
         this.props.loginUser(userData);
 
-        console.log(`Success: ${userData}`);
-
-        axios.post('http://localhost:5000/', userData)
-            .then(res => console.log(res.data));
     }
 
     render() {

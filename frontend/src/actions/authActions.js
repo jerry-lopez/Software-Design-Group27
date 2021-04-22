@@ -46,6 +46,18 @@ export const loginUser = userData => dispatch => {
         );
 };
 
+// Fill out client info form
+export const createProfile = (userData, history) => dispatch => {
+    axios
+      .post("/profile", userData)
+      .then(res => history.push("/newForm")) // This will redirect the user to the fuel quote page if successful
+      .catch(err => dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+          })
+        );
+};
+
 // Set logged in user
 export const setCurrentUser = decoded => {
     return {

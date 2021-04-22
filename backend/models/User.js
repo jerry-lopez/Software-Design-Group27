@@ -13,6 +13,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
         minlength: 8
+    },
+    clientInfo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'clientInfo'
     }
 });
 

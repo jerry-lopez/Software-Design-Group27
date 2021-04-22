@@ -30,10 +30,12 @@ require("./config/passport")(passport);
 const loginRouter = require("./routes/login");
 const registerRouter = require("./routes/register");
 const quoteFormRouter = require("./routes/quote");
+const profileRouter = require("./routes/profile");
 
 app.use('/', loginRouter);
 app.use('/register', registerRouter);
 app.use('/newForm', quoteFormRouter);
+app.use('/profile', profileRouter);
 
 //This starts the server by listening on a certain port
 app.listen(port, () => {

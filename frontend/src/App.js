@@ -12,7 +12,7 @@ import store from "./store";
 
 //Pages
 //import RegisterPage from "./pages/register";
-import ProfilePage from "./pages/profile";
+//import ProfilePage from "./pages/profile";
 
 //Components
 import TopNavbar from "./components/navbar.component";
@@ -20,6 +20,7 @@ import UserLogin from "./components/login-component";
 import NewFuelQuote from "./components/fuelQuote.component";
 import QuoteHistory from "./components/quoteHistory.component";
 import RegisterPage from "./components/register.component";
+import ProfilePage from "./components/profile.component";
 import PrivateRoute from "./components/private-route/privateRoute";
 
 // Check for token to keep user logged in
@@ -56,7 +57,7 @@ class App extends Component {
             <Route exact path="/" component={UserLogin} />
             <Route path="/quoteHistory" component={QuoteHistory} />
             <Route path="/register" component={RegisterPage} />
-            <Route path="/profile" component={ProfilePage} />
+            <PrivateRoute exact path="/profile" component={ProfilePage} />
             <PrivateRoute exact path="/newForm" component={NewFuelQuote} />
           </Switch>
         </Router>
