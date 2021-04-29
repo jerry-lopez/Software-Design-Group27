@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Form, Button, Card, Container } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
 import classnames from "classnames";
+import TopNavbar from "./navbar.component";
 
 class UserLogin extends Component {
     constructor(props) {
@@ -25,22 +27,23 @@ class UserLogin extends Component {
             this.props.history.push("/newForm");
         }
     }
-
+    
     UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated && this.props.clientInfo) {
-            this.props.history.push("/newForm"); // push user fuel quote component
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.push(`/profile/${this.state.username}`); // push user fuel quote component
         }
+        /*
         else if (nextProps.auth.isAuthenticated && !this.props.clientInfo){
-            this.props.history.push("/profile");
+            this.props.history.push("/profile/" + this.props._id);
         }
-
+        */
         if (nextProps.errors) {
             this.setState({
                 errors: nextProps.errors
             });
         }
     }
-
+    
     onChangeUsername = (e) => {
         this.setState({
             username: e.target.value
@@ -68,6 +71,8 @@ class UserLogin extends Component {
     render() {
         const { errors } = this.state;
         return(
+            <Container>
+            <TopNavbar />
             <Container className="mt-5 pt-5">
                 <Card>
                     <Card.Body>
@@ -118,6 +123,7 @@ class UserLogin extends Component {
                     </Card.Body>
                 </Card>
                 </Container>
+                </Container>
         )
     }
 }
@@ -136,4 +142,4 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     { loginUser }
-) (UserLogin);
+) (withRouter(UserLogin));

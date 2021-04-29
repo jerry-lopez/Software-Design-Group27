@@ -6,8 +6,9 @@ const validateProfileInput = require("../validation/profile");
 
 // Load in clientInfo model
 const Client = require("../models/ClientInfo")
+const User = require("../models/User")
 
-router.post("/", function(req, res) {
+router.post("/:id", function(req, res) {
     const { errors, isValid } = validateProfileInput(req.body);
 
     if (!isValid) {
@@ -20,7 +21,7 @@ router.post("/", function(req, res) {
     const city = req.body.city;
     const state = req.body.state;
     const zipcode = req.body.zipcode;
-    const username_id = req.body.username_id;
+    const username = req.body.username;
 
     const clientProfile = new Client ({
         fullname,
@@ -29,7 +30,7 @@ router.post("/", function(req, res) {
         city,
         state,
         zipcode,
-        username_id
+        username
     });
 
     clientProfile.save()

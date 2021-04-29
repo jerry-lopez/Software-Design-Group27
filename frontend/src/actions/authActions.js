@@ -49,9 +49,20 @@ export const loginUser = userData => dispatch => {
 // Fill out client info form
 export const createProfile = (userData, history) => dispatch => {
     axios
-      .post("/profile", userData)
+      .post("/profile/:id", userData)
       .then(res => history.push("/newForm")) // This will redirect the user to the fuel quote page if successful
-      .catch(err => dispatch({
+      .catch(err => dispatch({ 
+          type: GET_ERRORS,
+          payload: err.response.data
+          })
+        );
+};
+
+export const quoteForm = (userData, history) => dispatch => {
+    axios
+      .post("/newForm/:id", userData)
+      .then(res => history.push("/quoteHistory")) // This will redirect the user to the fuel quote page if successful
+      .catch(err => dispatch({ 
           type: GET_ERRORS,
           payload: err.response.data
           })
