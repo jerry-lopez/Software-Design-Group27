@@ -13,11 +13,13 @@ const userSchema = new Schema({
         type: String,
         required: true,
         minlength: 8
-    },
+    }
+    /*
     clientInfo: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'clientInfo'
     }
+    */
 });
 
 module.exports = User = mongoose.model("users", userSchema);

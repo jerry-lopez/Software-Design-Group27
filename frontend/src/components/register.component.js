@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
 import classnames from "classnames";
+import TopNavbar from "./navbar.component";
 
 class RegisterPage extends Component {
     constructor(props) {
@@ -32,9 +33,6 @@ class RegisterPage extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
-            this.props.history.push("/"); // push user login component
-        }
         if (nextProps.errors) {
             this.setState({
                 errors: nextProps.errors
@@ -69,6 +67,8 @@ class RegisterPage extends Component {
     render() {
         const { errors } = this.state;
         return (
+            <Container>
+            <TopNavbar />
             <Container className="mt-5 pt-5">
               <Card>
                   <Card.Body>
@@ -103,6 +103,7 @@ class RegisterPage extends Component {
                    </Card.Body>
                </Card>
            </Container>
+        </Container>
         )
     }
 }

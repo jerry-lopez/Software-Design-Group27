@@ -34,10 +34,11 @@ const clientSchema = new Schema({
         maxlength: 9,
         required: true
     },
-    username_id: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
+    username: {
+        type: String,
+        unique: true
     }
+    
 });
 
 module.exports = Client = mongoose.model("clientInfo", clientSchema);

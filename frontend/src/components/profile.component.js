@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile } from "../actions/authActions";
+import classnames from "classnames";
+import AuthNavbar from "./navbarAuth.component";
 import "bootstrap/dist/css/bootstrap.min.css"
 import states from "../states.json"
 const stateOptions = Object.keys(states).map(state => <option key={state} >{state}</option>)
@@ -19,6 +21,7 @@ class UserProfile extends Component {
         this.onChangeCity = this.onChangeCity.bind(this);
         this.onChangeState= this.onChangeState.bind(this);
         this.onChangeZipcode = this.onChangeZipcode.bind(this);
+        //this.onChangeUsernameId = this.onChangeUsernameId.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -28,16 +31,12 @@ class UserProfile extends Component {
             city: '',
             state: '',
             zipcode: '',
-            username_id: '',
+            username: '',
             errors: {}
         }
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
-            this.props.history.push("/newForm"); // push user fuel quote component
-        }
-
         if (nextProps.errors) {
             this.setState({
                 errors: nextProps.errors
@@ -81,12 +80,13 @@ class UserProfile extends Component {
         })
     }
 
+    /*
     onChangeUsernameId = (e) => {
         this.setState({
-            username_id: this.props.user._id
+            username_id: this.props.match.params.id
         })
     }
-
+    */
     onSubmit = (e) => {
         e.preventDefault();
 
@@ -97,16 +97,19 @@ class UserProfile extends Component {
             city: this.state.city,
             state: this.state.state,
             zipcode: this.state.zipcode,
-            username_id: this.state.username_id
+            username: this.props.match.params.id
         }
 
         this.props.createProfile(profileData, this.props.history);
+        
 
     }
 
     render() {
         const { errors } = this.state;
         return(
+            <Container>
+            <AuthNavbar />
             <Container className="mt-5 pt-5">
               <Card>
                   <Card.Body>
@@ -119,6 +122,7 @@ class UserProfile extends Component {
                                     onChange={this.onChangeFullname}
                                     value={this.state.fullname}
                                     error={errors.fullname}
+                                    className={classnames("", { invalid: errors.fullname})}
                                     />
                             </Form.Group>
     
@@ -129,6 +133,7 @@ class UserProfile extends Component {
                                     onChange={this.onChangeAddressOne}
                                     value={this.state.addressOne}
                                     error={errors.addressOne}
+                                    className={classnames("", { invalid: errors.addressOne})}
                                     />
                             </Form.Group>
     
@@ -138,6 +143,7 @@ class UserProfile extends Component {
                                     onChange={this.onChangeAddressTwo}
                                     value={this.state.addressTwo}
                                     error={errors.addressTwo}
+                                    className={classnames("", { invalid: errors.addressTwo})}
                                     />
                             </Form.Group>
     
@@ -149,6 +155,7 @@ class UserProfile extends Component {
                                     onChange={this.onChangeCity}
                                     value={this.state.city}
                                     error={errors.city}
+                                    className={classnames("", { invalid: errors.city})}
                                     />
                                 </Form.Group>
     
@@ -159,6 +166,7 @@ class UserProfile extends Component {
                                     onChange={this.onChangeState}
                                     value={this.state.state}
                                     error={errors.state}
+                                    className={classnames("", { invalid: errors.state})}
                                     >
                                     {stateOptions}
                                 </Form.Control>
@@ -170,7 +178,9 @@ class UserProfile extends Component {
                                     required
                                     onChange={this.onChangeZipcode}
                                     value={this.state.zipcode}
-                                    error={errors.zipcode}/>
+                                    error={errors.zipcode}
+                                    className={classnames("", { invalid: errors.zipcode})}
+                                    />
                                 </Form.Group>
                             </Form.Row>
     
@@ -187,6 +197,7 @@ class UserProfile extends Component {
                     </div>
                    </Card.Body>
                </Card>
+           </Container>
            </Container>
         );
     }

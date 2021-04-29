@@ -15,7 +15,6 @@ import store from "./store";
 //import ProfilePage from "./pages/profile";
 
 //Components
-import TopNavbar from "./components/navbar.component";
 import UserLogin from "./components/login-component";
 import NewFuelQuote from "./components/fuelQuote.component";
 import QuoteHistory from "./components/quoteHistory.component";
@@ -52,13 +51,12 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <TopNavbar />
           <Switch>
             <Route exact path="/" component={UserLogin} />
             <Route path="/quoteHistory" component={QuoteHistory} />
             <Route path="/register" component={RegisterPage} />
-            <PrivateRoute exact path="/profile" component={ProfilePage} />
-            <PrivateRoute exact path="/newForm" component={NewFuelQuote} />
+            <PrivateRoute exact path="/profile/:id" component={ProfilePage} />
+            <PrivateRoute exact path="/newForm/:id" component={NewFuelQuote} />
           </Switch>
         </Router>
       </Provider>

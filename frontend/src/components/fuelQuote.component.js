@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Container, Col, Button, Card } from "react-bootstrap";
-import axios from 'axios';
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser } from "../actions/authActions";
+import { quoteForm } from "../actions/authActions";
+import AuthNavbar from "./navbarAuth.component";
 
 class NewFuelQuote extends Component {
     constructor(props) {
@@ -16,14 +17,11 @@ class NewFuelQuote extends Component {
         // The remaining variables will be added once the database becomes available
         this.state = {
             numOfGallons: 0,
-            date: new Date()
+            deliveryAddress: '',
+            deliveryDate: new Date(),
+            username: ''
         }
     }
-
-    onLogoutClick = (e) => {
-        e.preventDefault();
-        this.props.logoutUser();
-    };
 
     onChangeGallons = (e) => {
         this.setState({
@@ -42,24 +40,23 @@ class NewFuelQuote extends Component {
 
         const quote = {
             numOfGallons: this.state.numOfGallons,
-            date: this.state.date
+            date: this.state.date,
+            username: this.props.match.params.id
         }
 
         console.log(`Success ${quote}`);
 
-        axios.post('http://localhost:5000/newForm', quote)
-            .then(res => console.log(res.data));
+        this.props.quoteForm(quote, this.props.history);
 
-        //window.location = '/newForm';
+        
     }
 
 
     render() {
         return (
+            <Container>
+                <AuthNavbar />
             <Container className="mt-5 mb-5 pt-5">
-                <div>
-                    <button onClick={this.onLogoutClick}>Logout</button>
-                </div>
                 <Card>
                   <Card.Body>
                     <Container>
@@ -112,20 +109,23 @@ class NewFuelQuote extends Component {
                   </Card.Body>
                 </Card>
             </Container>
+        </Container>
         )
     } 
 }
 
 NewFuelQuote.propTypes = {
-    logoutUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    quoteForm: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    errors: state.errors
 });
 
 export default connect(
     mapStateToProps,
-    { logoutUser }
-) (NewFuelQuote); 
+    { quoteForm }
+) (withRouter(NewFuelQuote)); 
