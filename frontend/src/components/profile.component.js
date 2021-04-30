@@ -21,7 +21,6 @@ class UserProfile extends Component {
         this.onChangeCity = this.onChangeCity.bind(this);
         this.onChangeState= this.onChangeState.bind(this);
         this.onChangeZipcode = this.onChangeZipcode.bind(this);
-        //this.onChangeUsernameId = this.onChangeUsernameId.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -80,13 +79,6 @@ class UserProfile extends Component {
         })
     }
 
-    /*
-    onChangeUsernameId = (e) => {
-        this.setState({
-            username_id: this.props.match.params.id
-        })
-    }
-    */
     onSubmit = (e) => {
         e.preventDefault();
 
