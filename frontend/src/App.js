@@ -53,10 +53,10 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={UserLogin} />
-            <Route path="/quoteHistory" component={QuoteHistory} />
             <Route path="/register" component={RegisterPage} />
             <PrivateRoute exact path="/profile/:id" component={ProfilePage} />
             <PrivateRoute exact path="/newForm/:id" component={NewFuelQuote} />
+            <PrivateRoute path="/quoteHistory" component={QuoteHistory} />
           </Switch>
         </Router>
       </Provider>

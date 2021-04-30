@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { quoteForm } from "../actions/authActions";
 import AuthNavbar from "./navbarAuth.component";
+import DatePicker from "react-datepicker";
 
 class NewFuelQuote extends Component {
     constructor(props) {
@@ -12,14 +13,24 @@ class NewFuelQuote extends Component {
 
         this.onChangeGallons = this.onChangeGallons.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
+        this.onChangeAddress= this.onChangeAddress.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
-        // The remaining variables will be added once the database becomes available
+        
         this.state = {
             numOfGallons: 0,
             deliveryAddress: '',
             deliveryDate: new Date(),
-            username: ''
+            username: '',
+            errors: {}
+        }
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
         }
     }
 
@@ -31,7 +42,13 @@ class NewFuelQuote extends Component {
 
     onChangeDate = (date) => {
         this.setState({
-            date: date
+            date: date.target.value
+        })
+    }
+
+    onChangeAddress = (e) => {
+        this.setState({
+            deliveryAddress: e.target.value
         })
     }
 
@@ -41,6 +58,7 @@ class NewFuelQuote extends Component {
         const quote = {
             numOfGallons: this.state.numOfGallons,
             date: this.state.date,
+            deliveryAddress: this.state.deliveryAddress,
             username: this.props.match.params.id
         }
 
@@ -53,6 +71,7 @@ class NewFuelQuote extends Component {
 
 
     render() {
+        const { errors } = this.state;
         return (
             <Container>
                 <AuthNavbar />
@@ -69,20 +88,26 @@ class NewFuelQuote extends Component {
                                     required
                                     value={this.state.numOfGallons}
                                     onChange={this.onChangeGallons}
+                                    error={errors.numOfGallons}
                                     />
                             </Col>
                             <Col>
                                 <Form.Label>Delivery Date</Form.Label>
-                                <Form.Control type="date"
-                                    valued={this.state.date}
+                                <Form.Control type="date" placeholder=" "
+                                    selected={this.state.date}
                                     onChange={this.onChangeDate}
+                                    error={errors.onChangeDate}
                                     />
                             </Col>
                             </Form.Row>
                             <Form.Row>
                                 <Col>
                                     <Form.Label>Delivery Address will be taken from your profile.</Form.Label>
-                                    <Form.Control type="text" placeholder="Address"/>
+                                    <Form.Control type="text" placeholder="Address"
+                                        value={this.state.deliveryAddress}
+                                        onChange={this.onChangeAddress}
+                                        error={errors.onChangeAddress}
+                                    />
                                 </Col>
                             </Form.Row>
                             <Form.Row>

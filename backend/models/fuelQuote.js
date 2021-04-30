@@ -10,13 +10,16 @@ const fuelQuoteSchema = new Schema({
         type: String
     },
     deliveryDate: {
-        type: date
+        type: Date
     },
     suggestedPrice: {
         type: Number
     },
     totalAmountDue: {
         type: Number
+    },
+    username: {
+        type: String
     }
 });
 

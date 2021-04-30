@@ -50,7 +50,7 @@ export const loginUser = userData => dispatch => {
 export const createProfile = (userData, history) => dispatch => {
     axios
       .post("/profile/:id", userData)
-      .then(res => history.push("/newForm")) // This will redirect the user to the fuel quote page if successful
+      .then(res => history.push("/newForm/:id")) // This will redirect the user to the fuel quote page if successful
       .catch(err => dispatch({ 
           type: GET_ERRORS,
           payload: err.response.data
@@ -61,7 +61,7 @@ export const createProfile = (userData, history) => dispatch => {
 export const quoteForm = (userData, history) => dispatch => {
     axios
       .post("/newForm/:id", userData)
-      .then(res => history.push("/quoteHistory")) // This will redirect the user to the fuel quote page if successful
+      .then(res => history.push("/quoteHistory"))
       .catch(err => dispatch({ 
           type: GET_ERRORS,
           payload: err.response.data
